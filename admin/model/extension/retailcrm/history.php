@@ -217,6 +217,7 @@ class ModelExtensionRetailcrmHistory extends Model {
             $this->orders_history->handleProducts($data, $order);
             $this->orders_history->handleTotals($data, $order);
             $this->orders_history->handleCustomFields($data, $order);
+            $this->enrichOrderWithCustomFields($data, $order);
             $data['customer_id'] = $customer_id;
 
             $data['order_status_id'] = 1;
@@ -277,6 +278,7 @@ class ModelExtensionRetailcrmHistory extends Model {
             $this->orders_history->handleProducts($data, $order);
             $this->orders_history->handleTotals($data, $order);
             $this->orders_history->handleCustomFields($data, $order);
+            $this->enrichOrderWithCustomFields($data, $order);
 
             $data['customer_id'] = $customer_id;
             if (array_key_exists($order['status'], $this->status)) {
@@ -337,5 +339,23 @@ class ModelExtensionRetailcrmHistory extends Model {
         }
 
         return array();
+    }
+
+    /**
+     * @param array &$data
+     * * @param array $order
+ */
+    protected function enrichOrderWithCustomFields(array &$data, array $order)
+    {
+        $deliveryDate = $order['delivery']['date'] ?? null;
+        $trackingNumber = $order['customerComment'] ?? null;
+
+        if (!empty($deliveryDate)) {
+            $data['shipping_date'] = $deliveryDate;
+        }
+
+        if (!empty($trackingNumber)) {
+            $data['tracking'] = $trackingNumber;
+        }
     }
 }

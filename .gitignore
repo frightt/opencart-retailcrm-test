@@ -1,0 +1,9 @@
+/system/storage/logs/
+/system/storage/cache/
+/system/storage/session/
+config.php
+admin/config.php
+/install/
+/.idea
+*.sql
+*.zip

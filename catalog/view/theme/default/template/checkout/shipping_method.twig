@@ -26,6 +26,17 @@
 <p>
   <textarea name="comment" rows="8" class="form-control">{{ comment }}</textarea>
 </p>
+<div class="form-group">
+  <label for="input-delivery-datetime">Preferred Delivery Date & Time</label>
+  <input type="datetime-local" name="delivery_datetime" id="input-delivery-datetime" class="form-control" />
+</div>
+
+<div class="form-group">
+  <label for="input-need-call">
+    <input type="checkbox" name="need_call" id="input-need-call" value="1" />
+    Require a pre-call before delivery
+  </label>
+</div>
 <div class="buttons">
   <div class="pull-right">
     <input type="button" value="{{ button_continue }}" id="button-shipping-method" data-loading-text="{{ text_loading }}" class="btn btn-primary" />

@@ -119,6 +119,16 @@ class ControllerCheckoutShippingMethod extends Controller {
 			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
 
 			$this->session->data['comment'] = strip_tags($this->request->post['comment']);
+
+            if (!isset($this->session->data['custom_field'])) {
+                $this->session->data['custom_field'] = [];
+            }
+
+            if (isset($this->request->post['delivery_datetime'])) {
+                $this->session->data['custom_field']['delivery_datetime'] = $this->request->post['delivery_datetime'];
+            }
+
+            $this->session->data['custom_field']['need_call'] = isset($this->request->post['need_call']) ? 1 : 0;
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -44,6 +44,18 @@ class ModelExtensionRetailcrmOrder extends Model {
         }
 
         if ($create) {
+            if (!isset($order['customFields'])) {
+                $order['customFields'] = [];
+            }
+
+            if (!empty($data['custom_field']['delivery_datetime'])) {
+                $order['customFields']['delivery_datetime'] = $data['custom_field']['delivery_datetime'];
+            }
+
+            if (isset($data['custom_field']['need_call'])) {
+                $order['customFields']['need_call'] = (bool)$data['custom_field']['need_call'];
+            }
+
             $order = self::filterRecursive($order);
             $response = $retailcrmApiClient->ordersCreate($order);
             if (isset($response['errors']['customer.externalId'])) {

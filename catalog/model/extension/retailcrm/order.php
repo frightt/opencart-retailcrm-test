@@ -49,11 +49,16 @@ class ModelExtensionRetailcrmOrder extends Model {
             }
 
             if (!empty($data['custom_field']['delivery_datetime'])) {
-                $order['customFields']['delivery_datetime'] = $data['custom_field']['delivery_datetime'];
+                $dateTime = new DateTime($data['custom_field']['delivery_datetime']);
+                $order['customFields']['delivery_datetime'] = $dateTime->format('Y-m-d H:i:s');
+            } else {
+                $order['customFields']['delivery_datetime'] = null;
             }
 
             if (isset($data['custom_field']['need_call'])) {
                 $order['customFields']['need_call'] = (bool)$data['custom_field']['need_call'];
+            } else {
+                $order['customFields']['need_call'] = false;
             }
 
             $order = self::filterRecursive($order);

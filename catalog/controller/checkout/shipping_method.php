@@ -124,12 +124,13 @@ class ControllerCheckoutShippingMethod extends Controller {
                 $this->session->data['custom_field'] = [];
             }
 
-            if (isset($this->request->post['delivery_datetime'])) {
+            if (!empty($this->request->post['delivery_datetime'])) {
                 $this->session->data['custom_field']['delivery_datetime'] = $this->request->post['delivery_datetime'];
+            } else {
+                unset($this->session->data['custom_field']['delivery_datetime']);
             }
-
             $this->session->data['custom_field']['need_call'] = isset($this->request->post['need_call']) ? 1 : 0;
-		}
+        }
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

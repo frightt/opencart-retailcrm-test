@@ -340,6 +340,15 @@ class ModelExtensionRetailcrmIcml extends Model
 
                     $weight->appendChild($this->dd->createTextNode($weightValue));
                     $catalog->appendChild($weight);
+
+                    // Ean
+                    if (!empty($product['ean'])) {
+                        $eanParam = $this->dd->createElement('param');
+                        $eanParam->setAttribute('code', 'ean');
+                        $eanParam->setAttribute('name', $this->language->get('text_ean'));
+                        $eanParam->appendChild($this->dd->createTextNode($product['ean']));
+                        $catalog->appendChild($eanParam);
+                    }
                 }
             }
         }
